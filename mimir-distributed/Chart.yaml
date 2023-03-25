@@ -1,0 +1,19 @@
+apiVersion: v2
+appVersion: 2.2.0
+dependencies:
+- alias: minio
+  condition: minio.enabled
+  name: minio
+  repository: https://helm.min.io/
+  version: 8.0.10
+- alias: grafana-agent-operator
+  condition: metaMonitoring.grafanaAgent.installOperator
+  name: grafana-agent-operator
+  repository: https://grafana.github.io/helm-charts
+  version: 0.1.12
+description: Grafana Mimir
+home: https://grafana.com/docs/mimir/v2.2.x/
+icon: https://grafana.com/static/img/logos/logo-mimir.svg
+kubeVersion: ^1.20.0-0
+name: mimir-distributed
+version: 3.0.0
