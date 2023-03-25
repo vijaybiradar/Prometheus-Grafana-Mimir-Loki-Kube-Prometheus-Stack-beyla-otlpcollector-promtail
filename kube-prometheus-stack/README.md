@@ -22,8 +22,7 @@ This command updates the Helm chart repository in the "kube-prom" namespace.
 Deploying kube-prometheus-stack
 To deploy kube-prometheus-stack with Helm, run the following command:
 
-bash
-Copy code
+
 helm upgrade kube-prometheus-stack prometheus-community/kube-prometheus-stack --version 41.7.0 -n kube-prom -f values.yaml
 This command deploys kube-prometheus-stack with the following parameters:
 
