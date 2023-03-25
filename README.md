@@ -1,4 +1,6 @@
-Kubernetes Observability using Grafana-Mimir, Loki, Jaeger, Kube-Prometheus-Stack
+#Kubernetes Observability using Grafana-Mimir, Loki, Jaeger, Kube-Prometheus-Stack#
+
+
 Introduction
 
 Kubernetes is a powerful tool for managing and orchestrating containerized applications at scale. However, as applications become more complex, it can be challenging to maintain visibility into their performance and behavior. This is where observability comes in. Observability is the practice of gathering and analyzing data from a system to understand its behavior and performance. In the context of Kubernetes, observability tools can help you monitor and troubleshoot your applications to ensure they are running smoothly.
