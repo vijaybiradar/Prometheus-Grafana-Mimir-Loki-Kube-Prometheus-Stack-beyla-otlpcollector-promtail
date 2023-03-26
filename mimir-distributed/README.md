@@ -104,10 +104,6 @@ curl -i -X GET \
 
 * http://localhost:8880/api/prom is end point of Mimir query-frontend, add your promql query to it
 
-* You can use minio ui at http://localhost:9001/
-* Log in with account, password minioadmin
-* mimir-block-docker bucket is storing metric data
-* You can see minio S3 buckets status
 
  ![image](https://user-images.githubusercontent.com/38376802/188643643-218550e9-fdc4-41bb-85fc-074fcd2b136a.png)
 
