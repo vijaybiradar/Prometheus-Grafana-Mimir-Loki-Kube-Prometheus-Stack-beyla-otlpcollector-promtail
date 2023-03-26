@@ -72,3 +72,60 @@ helm install mimir-test grafana/mimir-distributed \
 --set nginx.service.type=LoadBalancer \
 --set nginx.service.port=80
 Note that you'll need to replace <username> and <password> placeholders
+
+
+# Step-by-step guide 
+### Grafana Mimir MSA
+* You can access Mimir distributor admin console at http://localhost:8800/
+![Mimir Admin UI](http://imageresizer-dev-serverlessdeploymentbucket-xapz1q6q9exe.s3-website-ap-northeast-1.amazonaws.com/gitpng/mimir_console.PNG)
+
+* You can check remote writing metric targets Mimir admin console at http://localhost:8800/distributor/all_user_stats
+![Mimir User UI](http://imageresizer-dev-serverlessdeploymentbucket-xapz1q6q9exe.s3-website-ap-northeast-1.amazonaws.com/gitpng/mimir_user_stat_2.PNG)
+
+* You can view the configuration services of Mimir MSA at http://localhost:8800/memberlist
+![Mimir member UI](http://imageresizer-dev-serverlessdeploymentbucket-xapz1q6q9exe.s3-website-ap-northeast-1.amazonaws.com/gitpng/mimir_components.PNG)
+
+* Push prometheus metrics using endpoint http://localhost:8800/api/v1/push and X-Scope-OrgId http header
+* X-Scope-OrgId http header means tenant id, The tenant id identifies the target
+
+* You can see the metric names that can be checked with curl below
+```
+curl -i -X GET \
+   -H "X-Scope-OrgId:tenant id" \
+ 'http://localhost:8880/api/prom/api/v1/metadata'
+```
+
+* If you know how to use prometheus promql, then You can query metrics data with the http request below.
+```
+curl -i -X GET \
+   -H "X-Scope-OrgId:tenant id" \
+ 'http://localhost:8880/api/prom/api/v1/{promql}'
+```
+
+* http://localhost:8880/api/prom is end point of Mimir query-frontend, add your promql query to it
+
+* You can use minio ui at http://localhost:9001/
+* Log in with account, password minioadmin
+* mimir-block-docker bucket is storing metric data
+* You can see minio S3 buckets status
+
+ ![image](https://user-images.githubusercontent.com/38376802/188643643-218550e9-fdc4-41bb-85fc-074fcd2b136a.png)
+
+![image](https://user-images.githubusercontent.com/38376802/188643722-87cc6dee-6f5a-46fa-b2fa-fc2dfaaecfe1.png)
+
+![image](https://user-images.githubusercontent.com/38376802/188643791-cbfb3662-3cf4-4eaa-aeea-c49c874a6e14.png)
+
+ 
+
+Object storage
+
+Object storage
+I configured three separate buckets named mimir-alert, mimir-ruler-test, and mimir-tsdb 
+
+![image](https://user-images.githubusercontent.com/38376802/188644051-c59794db-e6c0-45a7-bdc5-12965612b385.png)
+
+
+After installing the Helm chart and waiting awhile, I could see data starting to show up in the bucket from my object store web interface:
+
+
+![image](https://user-images.githubusercontent.com/38376802/188644251-8e080de9-92b5-478a-8463-9dd788501c8b.png)
