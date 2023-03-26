@@ -23,7 +23,7 @@ Conclusion
 In conclusion, this document provides a brief guide on how to upgrade Mimir Distributed using Helm. By following the steps outlined in this guide, you can easily upgrade your Mimir Distributed installation and take advantage of new features and improvements provided by the 3.0.0 version. Make sure to adjust the values in the "values.yaml" file to match your desired configuration. If you want to preview the upgrade before performing it, use the "--dry-run" option.
 
 
-Here's the equivalent helm --set command for the given values.yaml file:
+# Here's the equivalent helm --set command for the given values.yaml file:
 
 helm install mimir-test grafana/mimir-distributed \
 --set global.extraEnvFrom[0].secretRef.name=prometheusmimir \
