@@ -1,4 +1,4 @@
-# Kubernetes Observability using Grafana-Mimir, Loki, Jaeger, Kube-Prometheus-Stack#
+# Kubernetes Observability using Grafana-Mimir, Loki, Jaeger, Kube-Prometheus-Stack
 
 
 # Introduction
