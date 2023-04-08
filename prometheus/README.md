@@ -23,6 +23,39 @@ helm upgrade prometheus prometheus-community/prometheus -n kube-prom -f values.y
 Accessing Prometheus
 By default, Prometheus is not exposed outside of the cluster. To access the Prometheus UI, you can use kubectl port-forward command to forward the port to your local machine:
 
+Example values.yaml:
+
+server:
+  name: server
+
+  image:
+    repository: quay.io/prometheus/prometheus
+    tag: ""
+
+  pullPolicy: IfNotPresent
+
+  extraFlags:
+    - web.enable-lifecycle
+
+  configPath: /etc/config/prometheus.yml
+
+  storagePath: ""
+
+  global:
+    scrape_interval: 1m
+    scrape_timeout: 10s
+    evaluation_interval: 1m
+    external_labels:
+      datacenter: prometheus-1
+
+  remoteWrite:
+    - name: prometheus-1
+      url: https://observ-mimir-stg.cloud-ng.net/api/v1/push
+      tls_config:
+        insecure_skip_verify: true
+
+
+
 
 kubectl port-forward service/prometheus-kube-prometheus-prometheus 9090:9090 -n kube-prom
 Then, you can access the Prometheus UI by navigating to http://localhost:9090 in your web browser.
@@ -36,3 +69,6 @@ This will completely remove Prometheus from your cluster.
 
 Conclusion
 Prometheus is a powerful tool for monitoring and alerting in Kubernetes environments. With Helm, it is easy to install and configure Prometheus in your cluster.
+
+
+
