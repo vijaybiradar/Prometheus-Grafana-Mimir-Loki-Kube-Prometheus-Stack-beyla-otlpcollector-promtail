@@ -23,7 +23,7 @@ helm upgrade prometheus prometheus-community/prometheus -n kube-prom -f values.y
 Accessing Prometheus
 By default, Prometheus is not exposed outside of the cluster. To access the Prometheus UI, you can use kubectl port-forward command to forward the port to your local machine:
 
-Example values.yaml:
+# Example values.yaml:
 
 server:
   name: server
