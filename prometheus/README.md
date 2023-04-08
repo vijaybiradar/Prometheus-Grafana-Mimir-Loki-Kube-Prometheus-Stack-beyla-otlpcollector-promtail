@@ -1,19 +1,22 @@
 # Prometheus Installation
 This guide outlines the steps to install Prometheus using Helm chart from the Prometheus Community repository.
 
-Prerequisites
+# Prerequisites
 Kubernetes cluster
 Helm 3
 Installation
 Add Prometheus Community repository:
-
+```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts -n kube-prom
+```
 Update the repository:
-
+```
 helm repo update -n kube-prom
+```
 Pull the Prometheus chart and untar it:
-
+```
 helm pull "prometheus-community/prometheus" --untar
+```
 Modify the values.yaml file based on your requirements. You can use the values.yaml file provided in this repository as a starting point.
 
 # Install Prometheus using the Helm chart:
@@ -63,8 +66,9 @@ Then, you can access the Prometheus UI by navigating to http://localhost:9090 in
 Uninstallation
 To uninstall Prometheus, run the following command:
 
-
+```
 helm uninstall prometheus -n kube-prom
+```
 This will completely remove Prometheus from your cluster.
 
 Conclusion
