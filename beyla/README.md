@@ -13,20 +13,18 @@
 ## Quick Start
 
 1. **Add the Grafana Helm Repository**:
-
-   ```bash
+ ```
    helm repo add grafana https://grafana.github.io/helm-charts
    helm repo update
+```
 Download and Untar the Chart:
 
-```bash
-
+```
 helm pull grafana/beyla --version 1.8.0 --untar
+```
 
-install or Upgrade Beyla:
+install or Upgrade Beyla:Deploy Beyla using the following command:
 
-Deploy Beyla using the following command:
-
-```bash
-
+```
 helm upgrade --install beyla grafana/beyla --version 1.8.0 -f values.yaml
+```
