@@ -1,19 +1,12 @@
-rbac:
-  create: true
-
-serviceAccount:
-  create: true
-
-securityContext:
-  privileged: true
-
 service:
   enabled: true
   type: ClusterIP
   port: 80
   targetPort: 9090
+  annotations: {}
+  labels: {}
 
-resources: 
+resources:
   limits:
     cpu: 1000m
     memory: 2Gi
@@ -21,16 +14,37 @@ resources:
     cpu: 100m
     memory: 200Mi
 
+podSecurityContext: {}
+securityContext:
+  privileged: true
+
 updateStrategy:
   type: RollingUpdate
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
 
 config:
   create: true
   data:
+    routes:
+      unmatched: heuristic
+    discovery:
+      services:
+        - k8s_namespace: .
     otel_traces_export:
       endpoint: http://opentelemetry-collector.net/
       tls:
         insecure_skip_verify: true
+    attributes:
+      kubernetes:
+        enable: true
     prometheus_export:
       port: 9090
       path: /metrics
+
+serviceMonitor:
+  enabled: true
+  labels:
+    release: kube-prometheus-stack
