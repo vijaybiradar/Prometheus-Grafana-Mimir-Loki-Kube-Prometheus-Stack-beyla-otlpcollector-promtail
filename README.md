@@ -19,7 +19,7 @@ There are several popular observability tools available for monitoring a Kuberne
 
 **Tempo-Distributed**  tracing backend designed for large-scale environments, supporting open-source tracing protocols and designed to work seamlessly with Grafana.
 
-- **Promtail**: A log shipping agent designed to help Loki collect logs from various sources, such as container logs. It automatically discovers and tail logs from Kubernetes pods and forwards them to Loki for aggregation.
+**Promtail**: A log shipping agent designed to help Loki collect logs from various sources, such as container logs. It automatically discovers and tail logs from Kubernetes pods and forwards them to Loki for aggregation.
 
 
 To get started with these tools, you will need a Kubernetes cluster. You can use a local development cluster like Minikube or a cloud-based solution like Amazon EKS or Google Kubernetes Engine. Once you have a cluster set up, you can follow these steps to get started with observability:
