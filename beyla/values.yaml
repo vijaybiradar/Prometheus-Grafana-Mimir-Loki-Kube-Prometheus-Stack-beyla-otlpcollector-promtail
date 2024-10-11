@@ -34,7 +34,7 @@ config:
       services:
         - k8s_namespace: .
     otel_traces_export:
-      endpoint: http://opentelemetry-collector.net/
+      endpoint: http://opentelemetry-collector.otlp-collector.svc.cluster.local:4318/
       tls:
         insecure_skip_verify: true
     attributes:
