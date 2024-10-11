@@ -1,0 +1,7 @@
+config:
+  # publish data to loki
+  clients:
+    - url: http://loki-dev-loki-distributed-gateway.loki.svc.cluster.local/loki/api/v1/push
+      tls_config:
+        insecure_skip_verify: true
+
