@@ -1,4 +1,4 @@
-# Kubernetes Observability using Grafana-Mimir, Loki, Jaeger, Kube-Prometheus-Stack, beyla, opentelemetry-collector ,tempo-distributed
+# Kubernetes Observability using Grafana-Mimir, Loki, Jaeger, Kube-Prometheus-Stack, beyla, opentelemetry-collector ,tempo-distributed, promtail
 
 
 # Introduction
