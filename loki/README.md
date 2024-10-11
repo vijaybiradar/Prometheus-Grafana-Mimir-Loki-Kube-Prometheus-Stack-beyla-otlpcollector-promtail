@@ -14,11 +14,22 @@ Loki is a log aggregation system designed to be easy to operate and integrate wi
 
 ## Installation
 
-To install Loki using Helm, run:
+### Step 1: Add the Grafana Helm Repository
+
+To add the Grafana Helm repository, run:
 
 ```bash
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
+Step 2: Pull the Loki Helm Chart
+You can pull the Loki Helm chart version 6.16.0 and extract it with the following command:
+
+
+helm pull grafana/loki --version 6.16.0 --untar
+Step 3: Install Loki
+To install Loki using Helm, run:
+
+
 helm install loki grafana/loki --values values.yaml
 Configuration
 The values.yaml file contains configuration options that can be customized before installation. Below are the key configurations you might want to modify:
@@ -71,8 +82,7 @@ deploymentMode: Distributed
 Replicas and Availability
 Configure the number of replicas for each component to ensure high availability:
 
-yaml
-Copy code
+
 ingester:
   replicas: 3
 querier:
