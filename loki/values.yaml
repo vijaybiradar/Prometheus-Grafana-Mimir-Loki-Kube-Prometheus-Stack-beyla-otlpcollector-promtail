@@ -1,0 +1,70 @@
+loki:
+  schemaConfig:
+    configs:
+      - from: 2024-04-01
+        store: tsdb
+        object_store: s3
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+  ingester:
+    chunk_encoding: snappy
+  tracing:
+    enabled: true
+  querier:
+    max_concurrent: 4
+
+  storage:
+    type: s3
+    bucketNames:
+      chunks: "<INSERT S3 BUCKET NAME FOR CHUNKS>"
+      ruler: "<INSERT S3 BUCKET NAME FOR RULER>"
+      admin: "<INSERT S3 BUCKET NAME FOR ADMIN>"
+    s3:
+      # Provide your AWS credentials and bucket details here
+      endpoint: <your-aws-endpoint>
+      region: <your-region>
+      accessKeyId: <your-access-key-id>
+      secretAccessKey: <your-secret-access-key>
+      signatureVersion: v4
+      s3ForcePathStyle: false
+      insecure: false
+      http_config: {}
+
+deploymentMode: Distributed
+
+# Replicas and Availability for different components
+ingester:
+  replicas: 3
+querier:
+  replicas: 3
+  maxUnavailable: 2
+queryFrontend:
+  replicas: 2
+  maxUnavailable: 1
+queryScheduler:
+  replicas: 2
+distributor:
+  replicas: 3
+  maxUnavailable: 2
+compactor:
+  replicas: 1
+indexGateway:
+  replicas: 2
+  maxUnavailable: 1
+
+# Disabling MinIO since we're using S3
+minio:
+  enabled: false
+
+# Optional: Disable Bloom filters if not needed
+bloomCompactor:
+  replicas: 0
+bloomGateway:
+  replicas: 0
+
+# Optional: Single binary is disabled for distributed mode
+singleBinary:
+  replicas: 0
+
