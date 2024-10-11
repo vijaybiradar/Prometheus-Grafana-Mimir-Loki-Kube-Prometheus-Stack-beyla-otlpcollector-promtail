@@ -24,8 +24,7 @@ Configuration
 The values.yaml file contains configuration options that can be customized before installation. Below are the key configurations you might want to modify:
 
 Schema Configuration
-yaml
-Copy code
+
 loki:
   schemaConfig:
     configs:
@@ -39,22 +38,19 @@ loki:
 Ingesters
 Adjust the ingester settings, including the chunk encoding:
 
-yaml
-Copy code
+
   ingester:
     chunk_encoding: snappy
 Tracing
 Enable or disable tracing:
 
-yaml
-Copy code
+
   tracing:
     enabled: true
 Storage
 Configure S3 bucket details for storing logs:
 
-yaml
-Copy code
+
   storage:
     type: s3
     bucketNames:
@@ -70,8 +66,7 @@ Copy code
 Deployment Mode
 Set the deployment mode to Distributed:
 
-yaml
-Copy code
+
 deploymentMode: Distributed
 Replicas and Availability
 Configure the number of replicas for each component to ensure high availability:
@@ -89,21 +84,18 @@ distributor:
 MinIO Configuration
 Disable MinIO if you are using S3:
 
-yaml
-Copy code
+
 minio:
   enabled: false
 Single Binary Mode
 Disable single binary mode for distributed deployment:
 
-yaml
-Copy code
+
 singleBinary:
   replicas: 0
 Usage
 After the installation, you can check the status of the Loki pods:
 
-bash
-Copy code
+
 kubectl get pods -l app=loki
 To access the logs, you can integrate Loki with Grafana by adding it as a data source.
