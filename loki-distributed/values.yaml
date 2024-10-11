@@ -1,0 +1,92 @@
+loki:
+  structuredConfig:
+    ingester:
+      max_transfer_retries: 0
+      chunk_idle_period: 1h
+      chunk_target_size: 1536000
+      max_chunk_age: 1h
+
+    server:
+      grpc_server_max_recv_msg_size: 999999999999
+      grpc_server_max_send_msg_size: 999999999999
+      http_listen_port: 3100
+      grpc_listen_port: 9095
+      http_server_idle_timeout: 1200s
+      http_server_read_timeout: 1200s
+      http_server_write_timeout: 1200s
+
+    storage_config:
+      aws:
+        access_key_id: access_key
+        secret_access_key: secret_key
+        s3: s3://eu-central-1/loki-distributed-stg-logs
+        bucketnames: loki-distributed-stg-logs
+      boltdb_shipper:
+        shared_store: s3
+
+    compactor:
+      shared_store: s3
+
+    schema_config:
+      configs:
+        - from: 2020-09-07
+          store: boltdb-shipper
+          object_store: aws
+          schema: v11
+          index:
+            prefix: loki_index_
+            period: 24h
+
+memcachedExporter:
+  enabled: true
+
+memcachedChunks:
+  enabled: true
+
+memcachedIndexQueries:
+  enabled: true
+
+distributor:
+  enabled: true
+  replicas: 2
+  maxUnavailable: 1
+
+ruler:
+  enabled: false
+
+compactor:
+  enabled: false
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClass: gp2
+
+indexGateway:
+  enabled: true
+  replicas: 1
+  persistence:
+    enabled: true
+    inMemory: false
+    size: 1Gi
+    storageClass: gp2
+
+queryScheduler:
+  enabled: true
+  replicas: 2
+
+ingester:
+  kind: StatefulSet
+  replicas: 1
+  persistence:
+    enabled: true
+    inMemory: false
+    size: 1Gi
+    storageClass: gp2
+
+rbac:
+  pspEnabled: false
+  sccEnabled: false
+
+serviceMonitor:
+  enabled: true
+
