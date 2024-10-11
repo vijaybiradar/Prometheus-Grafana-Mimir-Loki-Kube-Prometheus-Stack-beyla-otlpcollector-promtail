@@ -12,7 +12,7 @@ presets:
 config:
   exporters:
     otlphttp:
-      endpoint: 'https://tempo-distributed-prod.net/'
+      endpoint: 'http://tempo-distributed.tempo-dev.svc.local:4317'
       tls:
         insecure: true
   receivers:
