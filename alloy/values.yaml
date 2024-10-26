@@ -1,0 +1,127 @@
+# -- Overrides for the chart's name or fullname, if required
+nameOverride: null
+fullnameOverride: null
+
+global:
+  image:
+    registry: ""  # Optional: set your image registry if needed
+    pullSecrets: []
+
+# -- Manage CRDs for monitoring
+crds:
+  create: true
+
+# -- Alloy-specific configuration
+alloy:
+  configMap:
+    create: true  # Create a new ConfigMap
+    content: |
+      prometheus.scrape "node_exporter" {
+        targets = [{
+          __address__ = "node-exporter-prometheus-node-exporter.alloy.svc.cluster.local:9100"  # DNS of node-exporter service
+        }]
+        forward_to = [prometheus.remote_write.mimir.receiver]
+        job_name   = "node_exporter"
+      }
+
+      prometheus.remote_write "mimir" {
+        endpoint {
+          name = "mimir-distributor"
+          url  = "http://mimir-dev-distributor.mimir-dev.svc.cluster.local:8080/api/v1/push"  # DNS of Mimir distributor
+
+          queue_config {
+            capacity             = 5000
+            max_shards           = 300
+            max_samples_per_send = 1000
+          }
+
+          metadata_config {
+            max_samples_per_send = 1000
+          }
+        }
+      }
+  clustering:
+    enabled: false  # Disable clustering for now
+    name: ""  # Optional: set a name if clustering is enabled
+
+  storagePath: /tmp/alloy
+  listenAddr: 0.0.0.0
+  listenPort: 12345
+  listenScheme: HTTP
+  uiPathPrefix: /
+  enableReporting: true  # Enable anonymous usage stats reporting
+
+  extraEnv: []
+  envFrom: []
+  extraArgs: []
+  extraPorts: []
+
+  mounts:
+    varlog: false
+    dockercontainers: false
+    extra: []
+
+  resources: {}  # Define resource limits/requests here if needed
+
+controller:
+  type: 'daemonset'  # Change to 'deployment' or 'statefulset' if needed
+  replicas: 1  # Ignored if using daemonset
+
+  extraAnnotations: {}
+  hostNetwork: false
+  dnsPolicy: ClusterFirst
+  terminationGracePeriodSeconds: 30
+
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  updateStrategy: {}
+  priorityClassName: ''
+  podAnnotations: {}
+  podLabels: {}
+
+  podDisruptionBudget:
+    enabled: false
+
+  autoscaling:
+    enabled: false
+
+service:
+  enabled: true
+  type: ClusterIP
+  nodePort: 31128
+  clusterIP: ''
+  internalTrafficPolicy: Cluster
+  annotations: {}
+
+serviceAccount:
+  create: true
+  additionalLabels: {}
+  annotations: {}
+  name: null
+
+rbac:
+  create: true
+
+configReloader:
+  enabled: true
+  image:
+    registry: "ghcr.io"
+    repository: jimmidyson/configmap-reload
+    tag: v0.12.0
+  resources:
+    requests:
+      cpu: "1m"
+      memory: "5Mi"
+
+ingress:
+  enabled: false
+  annotations: {}
+  labels: {}
+  path: /
+  faroPort: 12347
+  pathType: Prefix
+  hosts:
+    - chart-example.local
+  tls: []
+
