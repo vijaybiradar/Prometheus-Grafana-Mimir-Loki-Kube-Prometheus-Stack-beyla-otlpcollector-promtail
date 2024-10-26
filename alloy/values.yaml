@@ -40,6 +40,33 @@ alloy:
           }
         }
       }
+
+      # Loki configuration for log forwarding
+      loki.write "loki" {
+        endpoint {
+          name = "loki-distributor"
+          url  = "http://loki-dev-loki-distributed-gateway.loki.svc.cluster.local/loki/api/v1/push"  # DNS of Loki distributor
+
+          batch_config {
+            batch_size = 500  # Number of logs to batch together.
+            timeout    = "5s"  # Time to wait before sending a batch.
+          }
+
+          client_config {
+            backoff_config {
+              min_period = "500ms"  # Minimum wait time between retries.
+              max_period = "5s"  # Maximum wait time between retries.
+              max_retries = 10  # Number of retry attempts if there's an issue.
+            }
+          }
+        }
+
+        labels {
+          job = "alloy"  # Metadata label to categorize the logs.
+        }
+
+        forward_to = [loki.write.loki.receiver]
+      }
   clustering:
     enabled: false  # Disable clustering for now
     name: ""  # Optional: set a name if clustering is enabled
@@ -124,4 +151,3 @@ ingress:
   hosts:
     - chart-example.local
   tls: []
-
